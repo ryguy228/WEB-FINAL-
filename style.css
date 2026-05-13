@@ -1,0 +1,74 @@
+/* Custom Stylesheet from Scratch */
+
+/* 1. Custom Background and Base Styles */
+body {
+    background-color: #f4f1ea; /* Soft "paper" cream color */
+    margin: 0;
+    padding: 0;
+    /* 2. Font Family Specification */
+    font-family: 'Georgia', serif;
+    /* 3. Font Color Specification */
+    color: #2c2c2c;
+    line-height: 1.6;
+}
+
+/* 4. Style Definitions: Navigation */
+nav {
+    background-color: #1a1a1a;
+    padding: 15px;
+    text-align: left;
+}
+
+nav a {
+    color: #ffffff;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+/* Div Styling for Positioning */
+.hero-section {
+    padding: 60px 20px;
+    text-align: center;
+    background-color: #2c2c2c;
+    color: #f4f1ea;
+}
+
+.content-block {
+    max-width: 800px;
+    margin: 40px auto;
+    padding: 20px;
+    background-color: #ffffff;
+    border: 1px solid #ddd;
+    box-shadow: 5px 5px 15px rgba(0,0,0,0.05);
+}
+
+.media-container {
+    max-width: 900px;
+    margin: 40px auto;
+    text-align: center;
+}
+
+.featured-image {
+    width: 100%;
+    max-width: 600px;
+    height: auto;
+    border: 10px solid white;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+}
+
+.video-wrapper {
+    margin-top: 20px;
+}
+
+.anchor-link {
+    display: inline-block;
+    margin-top: 20px;
+    color: #d4a373;
+    text-decoration: underline;
+}
+
+footer {
+    text-align: center;
+    padding: 40px;
+    font-size: 0.9em;
+}

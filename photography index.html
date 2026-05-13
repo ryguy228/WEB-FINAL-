@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>Photography Portfolio</title>
+
+  <style>
+
+    /* =========================
+       RESET
+    ========================= */
+    *,
+    *::before,
+    *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    /* =========================
+       BODY
+    ========================= */
+    body {
+      background: #efebe6;
+      color: #1f2933;
+      font-family: "Inter", Arial, sans-serif;
+      line-height: 1.6;
+      padding: 30px;
+    }
+
+    img {
+      max-width: 100%;
+      display: block;
+    }
+
+    /* =========================
+       NAVIGATION
+    ========================= */
+    .site-nav {
+      display: flex;
+      justify-content: center;
+      gap: 28px;
+      margin-bottom: 40px;
+      flex-wrap: wrap;
+    }
+
+    .site-nav a {
+      text-decoration: none;
+      color: #2b6f86;
+      font-weight: 600;
+      letter-spacing: 0.5px;
+      transition: color 0.3s ease;
+    }
+
+    .site-nav a:hover {
+      color: #184d61;
+    }
+
+    /* =========================
+       HERO SECTION
+    ========================= */
+    .hero-section {
+      text-align: center;
+      margin-bottom: 60px;
+      padding: 40px 20px;
+    }
+
+    .hero-section h1 {
+      font-family: "Georgia", serif;
+      font-size: clamp(2.5rem, 5vw, 4rem);
+      color: #0f1b22;
+      margin-bottom: 12px;
+    }
+
+    .subtitle {
+      color: #5d6870;
+      font-size: 1.1rem;
+      max-width: 700px;
+      margin: 0 auto 24px;
+    }
+
+    .anchor-button {
+      display: inline-block;
+      background: #2b6f86;
+      color: white;
+      text-decoration: none;
+      padding: 12px 22px;
+      border-radius: 8px;
+      font-weight: 600;
+      transition: all 0.3s ease;
+    }
+
+    .anchor-button:hover {
+      background: #1e5568;
+      transform: translateY(-2px);
+    }
+
+    /* =========================
+       GALLERY
+    ========================= */
+    .gallery-container {
+      display: grid;
+
+      /* Larger cards */
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+
+      gap: 22px;
+
+      /* Wider overall gallery */
+      max-width: 1300px;
+
+      margin: auto;
+    }
+
+    .gallery-item {
+      background: white;
+      border-radius: 14px;
+      overflow: hidden;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.06);
+
+      transition:
+        transform 0.3s ease,
+        box-shadow 0.3s ease;
+    }
+
+    .gallery-item:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 14px 28px rgba(0,0,0,0.12);
+    }
+
+    .gallery-item img {
+
+      /* Bigger images */
+      height: 240px;
+
+      width: 100%;
+      object-fit: cover;
+
+      transition: transform 0.4s ease;
+    }
+
+    .gallery-item:hover img {
+      transform: scale(1.04);
+    }
+
+    figcaption {
+      padding: 14px;
+      font-size: 0.95rem;
+      color: #5f6970;
+      text-align: center;
+    }
+
+    /* =========================
+       ABOUT SECTION
+    ========================= */
+    .content-block {
+      background: white;
+      max-width: 900px;
+      margin: 70px auto;
+      padding: 36px;
+      border-radius: 14px;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.05);
+    }
+
+    .content-block h2 {
+      font-family: "Georgia", serif;
+      margin-bottom: 16px;
+      color: #14232b;
+    }
+
+    .content-block p {
+      color: #4f5b62;
+    }
+
+    /* =========================
+       FOOTER
+    ========================= */
+    .site-footer {
+      text-align: center;
+      margin-top: 60px;
+      color: #6b747a;
+      font-size: 0.9rem;
+    }
+
+    /* =========================
+       MOBILE
+    ========================= */
+    @media (max-width: 700px) {
+
+      body {
+        padding: 18px;
+      }
+
+      .site-nav {
+        gap: 16px;
+      }
+
+      .gallery-container {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 14px;
+      }
+
+      .gallery-item img {
+        height: 170px;
+      }
+
+      .content-block {
+        padding: 24px;
+      }
+    }
+
+  </style>
+</head>
+
+<body>
+
+  <!-- NAVIGATION -->
+  <nav class="site-nav">
+    <a href="index.html">Lord of the Rings Snake Quest</a>
+    <a href="photography index.html">Photography From Me</a>
+    <a href="resume index.html">My Resume</a>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero-section">
+
+    <h1>My Photography Collection</h1>
+
+    <p class="subtitle">
+      A curated selection of personal photography capturing landscapes,
+      moments, architecture, and atmosphere.
+    </p>
+
+    <a href="#gallery" class="anchor-button">
+      View Gallery
+    </a>
+
+  </section>
+
+  <!-- GALLERY -->
+  <section id="gallery" class="gallery-container">
+
+  <figure class="gallery-item">
+    <img
+      src="images/IMG_2779.jpg"
+      alt="Photography image 1"
+      loading="lazy"
+    />
+    <figcaption>June 2022</figcaption>
+  </figure>
+
+  <figure class="gallery-item">
+    <img
+      src="images/IMG_4799.JPG"
+      alt="Photography image 2"
+      loading="lazy"
+    />
+    <figcaption>April 2023</figcaption>
+  </figure>
+
+  <figure class="gallery-item">
+    <img
+      src="images/IMG_4852.jpg"
+      alt="Photography image 3"
+      loading="lazy"
+    />
+    <figcaption>April 2023</figcaption>
+  </figure>
+
+  <figure class="gallery-item">
+    <img
+      src="images/IMG_4859.JPG"
+      alt="Photography image 4"
+      loading="lazy"
+    />
+    <figcaption>April 2023</figcaption>
+  </figure>
+
+  <figure class="gallery-item">
+    <img
+      src="images/IMG_4883.JPG"
+      alt="Photography image 5"
+      loading="lazy"
+    />
+    <figcaption>April 2023</figcaption>
+  </figure>
+
+  <figure class="gallery-item">
+    <img
+      src="images/IMG_3182.jpg"
+      alt="Photography image 6"
+      loading="lazy"
+    />
+    <figcaption>February 2023</figcaption>
+  </figure>
+
+  <figure class="gallery-item">
+    <img
+      src="images/IMG_4889.JPG"
+      alt="Photography image 7"
+      loading="lazy"
+    />
+    <figcaption>April 2023</figcaption>
+  </figure>
+
+  <figure class="gallery-item">
+    <img
+      src="images/IMG_4890.JPG"
+      alt="Photography image 8"
+      loading="lazy"
+    />
+    <figcaption>April 2023</figcaption>
+  </figure>
+
+  <figure class="gallery-item">
+    <img
+      src="images/IMG_4896.JPG"
+      alt="Photography image 9"
+      loading="lazy"
+    />
+    <figcaption>April 2023</figcaption>
+  </figure>
+
+  <figure class="gallery-item">
+    <img
+      src="images/IMG_4904.JPG"
+      alt="Photography image 10"
+      loading="lazy"
+    />
+    <figcaption>April 2023</figcaption>
+  </figure>
+
+</section>
+
+  <!-- ABOUT -->
+  <section class="content-block">
+
+    <h2>About This Collection</h2>
+
+    <p>
+      This gallery presents a personal archive of photography captured
+      over several years. The collection focuses on composition,
+      atmosphere, natural light, and everyday visual storytelling.
+    </p>
+
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="site-footer">
+    © 2026 Personal Photography Portfolio
+  </footer>
+
+</body>
+</html>

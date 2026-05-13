@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- NAVIGATION -->
+  <nav class="site-nav">
+    <a href="index.html">Lord of the Rings Snake Quest</a>
+    <a href="photography index.html">Photography From Me</a>
+    <a href="resume index.html">My Resume</a>
+  </nav>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Fellowship's Quest | Middle-earth Edition</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700&display=swap" rel="stylesheet">
+    <style>
+        /* --- BUFFERED STYLE PALETTE: LOTR EDITION --- */
+        :root {
+            /* Your Primary Palette */
+            --moria-navy: #001F3F;
+            --shire-green: #2D5A27;
+            --sauron-orange: #E67E22; /* Picasso pop, also fire */
+            --elven-blue: #AED6F1; /* user pref sky blue, also Elven light */
+            
+            /* Thematic Additions */
+            --parchment: #F4E4BC; /* Warmer, antique map feel */
+            --mithril-silver: #B0BEC5;
+            --hobbit-brown: #795548;
+            --gandalf-grey: #607D8B;
+        }
+
+        body {
+            /* Subtle background texture for the overall page */
+            background-color: var(--moria-navy);
+            background-image: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI0MCIgaGVpZ2h0PSI0MCIgdmlld0JveD0iMCAwIDQwIDQwIj48ZyBmaWxsLXJ1bGU9ImV2ZW5vZGQiPjxnIGZpbGw9IiMwMDFlMzUiIGZpbGwtb3BhY2l0eT0iMC41Ij48cGF0aCBkPSJNMCAwaDQwdjQwSDBWMHptMjAgMjBoMjB2MjBIMjBWMjB6TTAgMjBoMjB2MjBIMFYyMHoyMCAwaDIwdjIwSDIwVjB6Ii8+PC9nPjwvZz48L3N2Zz4=');
+            margin: 0;
+            padding: 20px;
+            font-family: 'Georgia', serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            color: var(--moria-navy);
+        }
+
+        #game-wrapper {
+            background-color: var(--parchment);
+            padding: 25px;
+            /* Stylized "Framed Map" border */
+            border: 8px solid #5D4037; /* Leather/wood frame */
+            border-left: 15px solid var(--sauron-orange); /* Picasso pop / Sauron's Gaze */
+            box-shadow: 0 15px 50px rgba(0,0,0,0.8);
+            text-align: center;
+            position: relative;
+            max-width: 450px;
+            border-radius: 4px;
+        }
+
+        h1 {
+            margin: 0;
+            font-family: 'Cinzel', serif; /* Cinematic fantasy font */
+            text-transform: uppercase;
+            letter-spacing: 5px;
+            color: var(--moria-navy);
+            text-shadow: 1px 1px 0px rgba(255,255,255,0.5);
+        }
+
+        #quest-status {
+            font-weight: bold;
+            color: #5D4037; /* Match frame */
+            margin: 10px 0;
+            font-variant: small-caps;
+            letter-spacing: 2px;
+            border-bottom: 1px solid rgba(0,0,0,0.1);
+            padding-bottom: 5px;
+        }
+
+        /* --- THE MAP CANVAS (Less Tetris) --- */
+        #lotrGame {
+            /* Map Texture Background */
+            background-color: #E6D5AC;
+            background-image: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI0IiBoZWlnaHQ9IjQiIHZpZXdCb3g9IjAgMCA0IDQiPjxnIGZpbGwtcnVsZT0iaV9pZGEiPjxnIGZpbGw9IiMwMDAwMDAiIGZpbGwtb3BhY2l0eT0iMC4wNSI+PHBhdGggZD0iTTAgMGgxdjFIMFYwem0yIDBoMXYxSDJWMHptMSAxSDF2MUgyVjF6TTAgMmgxdjFIMFYyem0yIDJoMXYxSDJWMnpNMSAzSDF2MUgyVjN6Ii8+PC9nPjwvZz48L3N2Zz4=');
+            display: block;
+            margin: 0 auto;
+            border: 3px solid #3E2723;
+            box-shadow: inset 0 0 20px rgba(0,0,0,0.2);
+            cursor: crosshair;
+        }
+
+        /* Cinematic Start Overlay */
+        #overlay {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0, 26, 51, 0.95); /* Deep Moria Navy */
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 10;
+            color: #E0C097; /* Muted Gold */
+            border-radius: 4px;
+        }
+
+        #overlay h2 { font-family: 'Cinzel', serif; letter-spacing: 3px; }
+
+        .start-btn {
+            padding: 15px 40px;
+            background-color: transparent;
+            color: var(--sauron-orange);
+            border: 2px solid var(--sauron-orange);
+            font-family: 'Cinzel', serif;
+            font-size: 1.2rem;
+            cursor: pointer;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            transition: all 0.3s ease;
+        }
+
+        .start-btn:hover {
+            background-color: var(--sauron-orange);
+            color: white;
+            box-shadow: 0 0 20px var(--sauron-orange);
+        }
+
+        .controls {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+            margin-top: 20px;
+        }
+
+        .dir-btn {
+            padding: 12px;
+            background: var(--moria-navy);
+            color: #E0C097;
+            border: 1px solid #5D4037;
+            cursor: pointer;
+            font-family: sans-serif;
+            text-transform: uppercase;
+            font-size: 0.7rem;
+            letter-spacing: 2px;
+            transition: 0.2s;
+        }
+
+        .dir-btn:hover { background: var(--sauron-orange); color: white; }
+    </style>
+</head>
+<body>
+
+    <div id="game-wrapper">
+        <div id="overlay">
+            <h2>The Road Goes Ever On</h2>
+            <button class="start-btn" onclick="startGame()">Begin Quest</button>
+        </div>
+
+        <h1>The Fellowship</h1>
+        <div id="quest-status">Rings of Power Found: 0</div>
+        
+        <canvas id="lotrGame" width="400" height="400"></canvas>
+
+        <div class="controls">
+            <div></div><button class="dir-btn" onclick="changeDir('UP')">NORTH</button><div></div>
+            <button class="dir-btn" onclick="changeDir('LEFT')">WEST</button>
+            <button class="dir-btn" onclick="changeDir('DOWN')">SOUTH</button>
+            <button class="dir-btn" onclick="changeDir('RIGHT')">EAST</button>
+        </div>
+    </div>
+
+    <script>
+        window.onload = function() {
+            const canvas = document.getElementById("lotrGame");
+            const ctx = canvas.getContext("2d");
+            const statusElement = document.getElementById("quest-status");
+
+            const box = 20;
+            let score = 0;
+            let speed = 150;
+            let d = "RIGHT"; 
+            let gameLoop;
+            let active = false;
+
+            // --- THEMATIC CHARACTER COLORS ---
+            // These map to specific character 'vibes' as the Fellowship grows
+            const characterColors = [
+                "#E67E22", // Head: Sauron's Gaze (keeps Picasso pop)
+                "#607D8B", // Segment 1: Gandalf Grey
+                "#B0BEC5", // Segment 2: Mithril Silver (Frodo)
+                "#2D5A27", // Segment 3: Aragorn Green
+                "#AED6F1", // Segment 4: Legolas Blue (user pref)
+                "#795548", // Segment 5: Gimli Brown
+                "#A1887F", // Segment 6: Boromir Red-Brown
+                "#C5E1A5", // Segment 7: Samwise Light Green
+                "#FFF59D", // Segment 8: Merry Yellow-Green
+                "#80CBC4"  // Segment 9: Pippin Teal
+            ];
+
+            let fellowship = [
+                { x: 10 * box, y: 10 * box },
+                { x: 9 * box, y: 10 * box },
+                { x: 8 * box, y: 10 * box }
+            ];
+
+            let ring = spawnRing();
+
+            function spawnRing() {
+                return {
+                    x: Math.floor(Math.random() * 19) * box,
+                    y: Math.floor(Math.random() * 19) * box
+                };
+            }
+
+            window.startGame = function() {
+                document.getElementById('overlay').style.display = 'none';
+                active = true;
+                if(gameLoop) clearInterval(gameLoop);
+                gameLoop = setInterval(draw, speed);
+            };
+
+            window.changeDir = function(newDir) {
+                if(newDir == 'LEFT' && d != "RIGHT") d = "LEFT";
+                if(newDir == 'UP' && d != "DOWN") d = "UP";
+                if(newDir == 'RIGHT' && d != "LEFT") d = "RIGHT";
+                if(newDir == 'DOWN' && d != "UP") d = "DOWN";
+            };
+
+            document.addEventListener("keydown", (e) => {
+                if(e.keyCode == 37 && d != "RIGHT") d = "LEFT";
+                if(e.keyCode == 38 && d != "DOWN") d = "UP";
+                if(e.keyCode == 39 && d != "LEFT") d = "RIGHT";
+                if(e.keyCode == 40 && d != "UP") d = "DOWN";
+            });
+
+            function draw() {
+                if(!active) return;
+
+                // 1. Draw Map Texture
+                ctx.fillStyle = "#E6D5AC"; // Map base color
+                ctx.fillRect(0, 0, canvas.width, canvas.height);
+                // Draw map grid (very subtle dot pattern)
+                ctx.fillStyle = "rgba(0,0,0,0.03)";
+                for(let x=0; x<canvas.width; x+=box) {
+                    for(let y=0; y<canvas.height; y+=box) {
+                        ctx.fillRect(x+box/2, y+box/2, 2, 2);
+                    }
+                }
+
+                // 2. Draw Ring (The One Ring - Gold with Script)
+                ctx.fillStyle = "#D4AF37"; // Golden Rod
+                ctx.shadowBlur = 15;
+                ctx.shadowColor = "#E67E22"; // Fiery orange glow
+                ctx.beginPath();
+                ctx.arc(ring.x + box/2, ring.y + box/2, box/2.5, 0, 2 * Math.PI);
+                ctx.fill();
+                
+                // Add simplified Elvish script look on the ring
+                ctx.shadowBlur = 0;
+                ctx.strokeStyle = "rgba(255,255,255,0.5)";
+                ctx.lineWidth = 1;
+                ctx.beginPath();
+                ctx.arc(ring.x + box/2, ring.y + box/2, box/4, 0, 1.5 * Math.PI);
+                ctx.stroke();
+
+                // 3. Draw Fellowship (Fluid Shapes, Character Colors)
+                for(let i = 0; i < fellowship.length; i++) {
+                    // Pick color based on Fellowship position
+                    let colorIndex = i % characterColors.length;
+                    ctx.fillStyle = characterColors[colorIndex];
+                    
+                    // Break the Tetris block: Use illustrative shapes
+                    ctx.beginPath();
+                    if(i == 0) {
+                        // Head: Dynamic Arrowhead/Compass Pointer
+                        ctx.moveTo(fellowship[i].x + box/2, fellowship[i].y);
+                        ctx.lineTo(fellowship[i].x + box, fellowship[i].y + box/2);
+                        ctx.lineTo(fellowship[i].x + box/2, fellowship[i].y + box);
+                        ctx.lineTo(fellowship[i].x, fellowship[i].y + box/2);
+                    } else {
+                        // Body Segments: Shields/Rounded Icons
+                        let radius = 6;
+                        let x = fellowship[i].x;
+                        let y = fellowship[i].y;
+                        let w = box;
+                        let h = box;
+                        ctx.moveTo(x + radius, y);
+                        ctx.lineTo(x + w - radius, y);
+                        ctx.quadraticCurveTo(x + w, y, x + w, y + radius);
+                        ctx.lineTo(x + w, y + h - radius);
+                        ctx.quadraticCurveTo(x + w, y + h, x + w - radius, y + h);
+                        ctx.lineTo(x + radius, y + h);
+                        ctx.quadraticCurveTo(x, y + h, x, y + h - radius);
+                        ctx.lineTo(x, y + radius);
+                        ctx.quadraticCurveTo(x, y, x + radius, y);
+                    }
+                    ctx.fill();
+                    
+                    // Add standard outline for structure
+                    ctx.strokeStyle = "rgba(0,0,0,0.2)";
+                    ctx.lineWidth = 1;
+                    ctx.stroke();
+                }
+
+                // 4. Game Logic (Movement)
+                let headX = fellowship[0].x;
+                let headY = fellowship[0].y;
+
+                if(d == "LEFT") headX -= box;
+                if(d == "UP") headY -= box;
+                if(d == "RIGHT") headX += box;
+                if(d == "DOWN") headY += box;
+
+                // 5. Collision with Ring
+                if(headX == ring.x && headY == ring.y) {
+                    score++;
+                    statusElement.innerHTML = `Rings of Power Found: ${score}`;
+                    ring = spawnRing();
+                    // Speed up slightly
+                    if(speed > 60) {
+                        speed -= 3;
+                        clearInterval(gameLoop);
+                        gameLoop = setInterval(draw, speed);
+                    }
+                } else {
+                    fellowship.pop();
+                }
+
+                let newHead = { x: headX, y: headY };
+
+                // 6. Game Over Checks
+                if(headX < 0 || headX >= canvas.width || headY < 0 || headY >= canvas.height || 
+                   fellowship.some((seg, index) => index !== 0 && seg.x === newHead.x && seg.y === newHead.y)) {
+                    clearInterval(gameLoop);
+                    alert("THE QUEST HAS FAILED! The Fellowship has been scattered. You collected " + score + " rings.");
+                    location.reload();
+                }
+
+                fellowship.unshift(newHead);
+            }
+        };
+    </script>
+</body>
+</html>
